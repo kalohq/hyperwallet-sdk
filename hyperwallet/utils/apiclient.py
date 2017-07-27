@@ -3,7 +3,6 @@
 import sys
 import ssl
 import json
-import urllib.parse
 import requests
 
 from hyperwallet.exceptions import HyperwalletException
@@ -44,7 +43,7 @@ class ApiClient(object):
         self.server = server
 
         # The complete base URL of the API.
-        self.baseUrl = urllib.parse.urljoin(self.server, '/rest/v3/')
+        self.baseUrl = requests.compat.urljoin(self.server, '/rest/v3/')
 
         # The default connection to persist authentication and SSL settings.
         defaultSession = requests.Session()
@@ -88,7 +87,7 @@ class ApiClient(object):
 
         try:
             response = self.session.request(method=method,
-                                            url=urllib.parse.urljoin(
+                                            url=requests.compat.urljoin(
                                                 self.baseUrl, url
                                             ),
                                             data=data,
