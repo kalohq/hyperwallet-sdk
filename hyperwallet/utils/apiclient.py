@@ -106,6 +106,7 @@ class ApiClient(object):
 
                 # Overwrite the general error response if errors were returned
                 body['errors'] = response.json().get('errors')
+                body['status_code'] = response.status_code
 
         return body
 

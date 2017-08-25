@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.3.1 (2017-08-25)
+------------------
+- Include HTTP status code in error responses
+
 0.3.0 (2017-07-27)
 ------------------
 - Support Python 3.x
