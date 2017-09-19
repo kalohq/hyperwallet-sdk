@@ -35,8 +35,7 @@ To write an app using the SDK
 
     api = hyperwallet.Api(
         "test-user",
-        "test-pass",
-        "prg-12345"
+        "test-pass"
     )
 
 * Start making API calls (e.g. create a user)
