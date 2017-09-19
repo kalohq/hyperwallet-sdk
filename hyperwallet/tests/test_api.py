@@ -26,16 +26,6 @@ class ApiInitializationTest(unittest.TestCase):
 
         self.assertEqual(str(exc.exception), 'password is required')
 
-    def test_no_program_token(self):
-
-        with self.assertRaises(HyperwalletException) as exc:
-            self.api = hyperwallet.Api(
-                'username',
-                'password'
-            )
-
-        self.assertEqual(str(exc.exception), 'programToken is required')
-
 
 class ApiTest(unittest.TestCase):
 
@@ -45,7 +35,6 @@ class ApiTest(unittest.TestCase):
         self.api = hyperwallet.Api(
             'test-user',
             'test-pass',
-            self.program_token
         )
 
         self.data = {
@@ -57,36 +46,6 @@ class ApiTest(unittest.TestCase):
 
         self.mock_response = mock.Mock()
         self.mock_response.json.return_value = self.expected_output
-
-    def test_add_program_token_with_non_dictonary(self):
-
-        with self.assertRaises(HyperwalletException) as exc:
-            self.api._addProgramToken(1)
-
-        self.assertEqual(
-            str(exc.exception),
-            'data must be a dictionary object'
-        )
-
-    def test_add_program_token_with_empty_dictonary(self):
-
-        response = self.api._addProgramToken({})
-
-        self.assertEquals(response.get('programToken'), self.program_token)
-
-    def test_add_program_token_with_primed_dictonary(self):
-
-        response = self.api._addProgramToken(self.data)
-
-        self.assertEquals(response.get('programToken'), self.program_token)
-
-    def test_add_program_token_with_dictonary_contains_program_token(self):
-
-        response = self.api._addProgramToken(
-            {'programToken': self.program_token}
-        )
-
-        self.assertEquals(response.get('programToken'), self.program_token)
 
     @mock.patch('hyperwallet.utils.ApiClient._makeRequest')
     def test_list_users(self, mock_get):

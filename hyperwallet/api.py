@@ -13,8 +13,6 @@ class Api(object):
 
     :param username: The username of this API user. **REQUIRED**
     :param password: The password of this API user. **REQUIRED**
-    :param programToken:
-        The token for the program this user is accessing. **REQUIRED**
     :param server: Your UAT or Production API URL if applicable.
 
     .. note::
@@ -25,7 +23,6 @@ class Api(object):
     def __init__(self,
                  username=None,
                  password=None,
-                 programToken=None,
                  server=SERVER):
         '''
         Create an instance of the API interface.
@@ -38,35 +35,11 @@ class Api(object):
         if not password:
             raise HyperwalletException('password is required')
 
-        if not programToken:
-            raise HyperwalletException('programToken is required')
-
         self.username = username
         self.password = password
-        self.programToken = programToken
         self.server = server
 
         self.apiClient = ApiClient(self.username, self.password, self.server)
-
-    def _addProgramToken(self, data):
-        '''
-        Add the program token to the data object.
-
-        :param data:
-            A dictionary containing values defining a resource. **REQUIRED**
-        :returns:
-            A dictionary containing the provided values and the program token.
-        '''
-
-        if not isinstance(data, dict):
-            raise HyperwalletException('data must be a dictionary object')
-
-        if 'programToken' in data:
-            return data
-
-        data['programToken'] = self.programToken
-
-        return data
 
     def listUsers(self,
                   params=None):
@@ -90,8 +63,6 @@ class Api(object):
 
         if not data:
             raise HyperwalletException('data is required')
-
-        self._addProgramToken(data)
 
         return self.apiClient.doPost('users', data)
 
@@ -753,8 +724,6 @@ class Api(object):
 
         if not data:
             raise HyperwalletException('data is required')
-
-        self._addProgramToken(data)
 
         return self.apiClient.doPost('payments', data)
 
