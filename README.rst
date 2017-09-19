@@ -29,8 +29,7 @@ To write an app using the SDK
 
     import hyperwallet
 
-* Create an instance of the Hyperwallet Client (with username, password and
-  program token)
+* Create an instance of the Hyperwallet Client (with username, password)
 
 .. code::
 
@@ -54,7 +53,8 @@ To write an app using the SDK
         city: "Austin",
         stateProvince: "TX",
         country: "US",
-        postalCode: "78701"
+        postalCode: "78701",
+        programToken: "prg-12345"
     }
 
     response = api.createUser(data)
@@ -73,19 +73,14 @@ Install development dependencies:
 
 .. code::
 
-    $ make dev
+    $ pip install -r requirements.txt
 
 Run the tests:
 
 .. code::
 
-    $ make test
+    $ pytest hyperwallet/tests
 
-Compile the documentation:
-
-.. code::
-
-    $ make docs
 
 Requirements
 ------------

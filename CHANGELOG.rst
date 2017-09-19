@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.3.2 (2017-09-19)
+------------------
+- Require consumer to handle `programToken` explicitly
+
 0.3.1 (2017-08-25)
 ------------------
 - Include HTTP status code in error responses
