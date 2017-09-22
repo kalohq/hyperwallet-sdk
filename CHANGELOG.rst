@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.3.3 (2017-09-22)
+------------------
+- Rebuild with proper __version__
+
 0.3.2 (2017-09-19)
 ------------------
 - Require consumer to handle `programToken` explicitly
