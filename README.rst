@@ -4,6 +4,8 @@ Hyperwallet REST SDK (Beta)
 
 A library to manage users, transfer methods and payments through the Hyperwallet API
 
+NOTE: To log all API requests/responses to stdout for debugging and reporting issues back to Hyperwallet, export an `HYPERWALLET_DEBUG` environment variable.
+
 Installation
 ------------
 
