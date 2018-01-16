@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
+import os
 import sys
 import ssl
 import json
 import requests
+from pprint import pprint
 
 from hyperwallet.exceptions import HyperwalletException
 from requests_toolbelt.adapters.ssl import SSLAdapter
@@ -85,6 +87,14 @@ class ApiClient(object):
             ]
         }
 
+        if os.getenv('HYPERWALLET_DEBUG'):
+            print('=== Hyperwallet API request ===')
+            print('{} {}'.format(method, url))
+            if isinstance(data, bytes):
+                pprint(json.loads(data.decode()))
+            elif data:
+                pprint(data)
+
         try:
             response = self.session.request(method=method,
                                             url=requests.compat.urljoin(
@@ -108,6 +118,9 @@ class ApiClient(object):
                 body['errors'] = response.json().get('errors')
                 body['status_code'] = response.status_code
 
+        if os.getenv('HYPERWALLET_DEBUG'):
+            print('Response:')
+            pprint(body)
         return body
 
     def doGet(self, partialUrl, params={}):
