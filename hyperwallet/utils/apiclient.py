@@ -107,7 +107,9 @@ class ApiClient(object):
         except:
             return body
 
-        if response.ok:
+        if response.status_code == 204:
+            body = {'count': 0, 'data': []}
+        elif response.ok:
             body = response.json()
         else:
             if (not response.ok and
