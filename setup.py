@@ -30,7 +30,7 @@ setup(
     version = extract_metaitem('version'),
     license = extract_metaitem('license'),
     description = extract_metaitem('description'),
-    long_description = (read('README.rst') + '\n\n' +
+    long_description = (read('README.md') + '\n\n' +
                         read('CHANGELOG.rst')),
     maintainer = extract_metaitem('author'),
     maintainer_email = extract_metaitem('email'),
