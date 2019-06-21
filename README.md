@@ -16,12 +16,13 @@ Development & Testing is done within a virtualenv
 ```
 virtualenv .venv
 source .venv/bin/activate
+pip install -r dev-requirements.txt
 ```
 
 ## Running tests
 
 ```
-python setup.py test
+python setup.py test && tox && pycodestyle hyperwallet
 ```
 
 ## Building
@@ -34,6 +35,14 @@ python setup.py build
 
 ```
 python setup.py install
+```
+
+## Coverage
+
+```
+coverage run setup.py test
+coverage html
+coverage report
 ```
 
 ## Usage
