@@ -7,9 +7,50 @@ make a pull request against the official repo.
 
 ---
 
-## Sample code
+# Basics
 
-Create `hw.py`:
+## Setting up
+
+Development & Testing is done within a virtualenv
+
+```
+virtualenv .venv
+source .venv/bin/activate
+pip install -r dev-requirements.txt
+```
+
+## Running tests
+
+```
+python setup.py test && tox && pycodestyle hyperwallet
+```
+
+## Building
+
+```
+python setup.py build
+```
+
+## Installing
+
+```
+python setup.py install
+```
+
+## Coverage
+
+```
+coverage run setup.py test
+coverage html
+coverage report
+```
+
+## Usage
+
+<details>
+<summary>Expand ...</summary>
+
+### Create `hw.py`
 
 ```
 import json
@@ -82,10 +123,12 @@ list_all_users()
 
 ```
 
-## How to use
+### Run the code
 
 ```
 pip install https://github.com/kalohq/hyperwallet-sdk/archive/v0.3.6.zip
 export HYPERWALLET_DEBUG=1  # log all API requests/responses to stdout
 python hw.py
 ```
+</details>
+
