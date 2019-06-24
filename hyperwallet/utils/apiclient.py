@@ -55,12 +55,14 @@ class ApiClient(object):
 
         self.session = defaultSession
 
-    def _makeRequest(self,
-                     method=None,
-                     url=None,
-                     data=None,
-                     headers=None,
-                     params=None):
+    def _makeRequest(
+        self,
+        method=None,
+        url=None,
+        data=None,
+        headers=None,
+        params=None
+    ):
         '''
         Process an API response to ensure a JSON object is returned always.
 
@@ -96,14 +98,15 @@ class ApiClient(object):
                 pprint(data)
 
         try:
-            response = self.session.request(method=method,
-                                            url=requests.compat.urljoin(
-                                                self.baseUrl, url
-                                            ),
-                                            data=data,
-                                            headers=headers,
-                                            params=params
-                                            )
+            response = self.session.request(
+                method=method,
+                url=requests.compat.urljoin(
+                    self.baseUrl, url
+                ),
+                data=data,
+                headers=headers,
+                params=params
+            )
         except:
             return body
 
@@ -112,13 +115,18 @@ class ApiClient(object):
         elif response.ok:
             body = response.json()
         else:
-            if (not response.ok and
-                    response.content and
-                    response.json().get('errors')):
-
-                # Overwrite the general error response if errors were returned
-                body['errors'] = response.json().get('errors')
+            if not response.ok:
                 body['status_code'] = response.status_code
+
+                if response.content:
+                    if 'json' in response.headers.get('content-type', ''):
+                        # Overwrite the general error response
+                        # if errors were returned
+                        body['errors'] = response.json().get('errors')
+                    else:
+                        body['errors'] = 'Non-JSON Response'
+                else:
+                    body['errors'] = 'No Content'
 
         if os.getenv('HYPERWALLET_DEBUG'):
             print('Response:')
@@ -135,10 +143,11 @@ class ApiClient(object):
         :returns: The API response.
         '''
 
-        return self._makeRequest(method='GET',
-                                 url=partialUrl,
-                                 params=params
-                                 )
+        return self._makeRequest(
+            method='GET',
+            url=partialUrl,
+            params=params
+        )
 
     def doPost(self, partialUrl, data, headers={}):
         '''
@@ -152,11 +161,12 @@ class ApiClient(object):
         :returns: The API response.
         '''
 
-        return self._makeRequest(method='POST',
-                                 url=partialUrl,
-                                 data=json.dumps(data).encode('utf-8'),
-                                 headers=headers
-                                 )
+        return self._makeRequest(
+            method='POST',
+            url=partialUrl,
+            data=json.dumps(data).encode('utf-8'),
+            headers=headers
+        )
 
     def doPut(self, partialUrl, data):
         '''
@@ -169,7 +179,8 @@ class ApiClient(object):
         :returns: The API response.
         '''
 
-        return self._makeRequest(method='PUT',
-                                 url=partialUrl,
-                                 data=json.dumps(data).encode('utf-8')
-                                 )
+        return self._makeRequest(
+            method='PUT',
+            url=partialUrl,
+            data=json.dumps(data).encode('utf-8')
+        )
