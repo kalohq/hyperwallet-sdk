@@ -92,6 +92,24 @@ class ApiTest(unittest.TestCase):
         self.assertTrue(response.json(), self.expected_output)
 
     @mock.patch('hyperwallet.utils.ApiClient._makeRequest')
+    def test_get_authentication_token_with_nothing(self, mock_post):
+
+        mock_post.return_value = self.mock_response
+
+        with self.assertRaises(HyperwalletException) as exc:
+            self.api.createAuthenticationToken()
+
+        self.assertEqual(str(exc.exception), 'userToken is required')
+
+    @mock.patch('hyperwallet.utils.ApiClient._makeRequest')
+    def test_get_authentication_token_with_user_token(self, mock_post):
+
+        mock_post.return_value = self.mock_response
+        response = self.api.createAuthenticationToken('token')
+
+        self.assertTrue(response.json(), self.expected_output)
+
+    @mock.patch('hyperwallet.utils.ApiClient._makeRequest')
     def test_update_user_with_nothing(self, mock_put):
 
         mock_put.return_value = self.mock_response
