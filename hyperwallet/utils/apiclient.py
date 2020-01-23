@@ -107,7 +107,7 @@ class ApiClient(object):
                 headers=headers,
                 params=params
             )
-        except:
+        except Exception:
             return body
 
         if response.status_code == 204:

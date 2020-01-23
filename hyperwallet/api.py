@@ -66,6 +66,23 @@ class Api(object):
 
         return self.apiClient.doPost('users', data)
 
+    def createAuthenticationToken(self,
+                                  userToken=None):
+        '''
+        Create an authentication token for the specified userToken.
+
+        :param userToken: A token identifying the User. **REQUIRED**
+        :returns: The an encrypted user token valid for limited time for the user
+        '''
+
+        if not userToken:
+            raise HyperwalletException('userToken is required')
+
+        return self.apiClient.doPost(
+            os.path.join('users', userToken, 'authentication-token'),
+            ""
+        )
+
     def retrieveUser(self,
                      userToken=None):
         '''
